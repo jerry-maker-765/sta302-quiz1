@@ -1,0 +1,33 @@
+library(ggplot2)
+
+set.seed(123)
+
+hours <- 1:8
+takeoff <- sample(1:10, 8, replace = TRUE)
+
+
+dataset <- data.frame(Hour = hours, Planes = takeoff)
+
+
+plot <- ggplot(dataset, aes(x = Hour, y = Planes)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Number of Planes Landed Each Hour",
+       x = "Hour of the Day",
+       y = "Number of Planes Landed") +
+  theme_minimal()
+
+
+# Test 1: Calculate the mean number of planes landed per hour
+mean_landings <- mean(dataset$PlanesLanded)
+
+# Test 2: Determine the hour with the maximum number of landings
+max_landings_hour <- dataset$Hour[which.max(dataset$PlanesLanded)]
+
+# Test 3: Perform a simple linear regression to see if there is a trend over time
+trend_test <- lm(PlanesLanded ~ Hour, data = dataset)
+
+
+print(plot)
+print(paste("Mean number of planes landed per hour:", mean_landings))
+print(paste("Hour with the maximum number of landings:", max_landings_hour))
+print(summary(trend_test))
